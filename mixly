@@ -1,0 +1,36 @@
+WidgetLED ledV3(V3);
+volatile float dist;
+
+float checkdistance_A1_A2() {
+  digitalWrite(A1, LOW);
+  delayMicroseconds(2);
+  digitalWrite(A1, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(A1, LOW);
+  float distance = pulseIn(A2, HIGH) / 58.00;
+  delay(10);
+  return distance;
+}
+
+void setup(){
+  dist = 0;
+  pinMode(A1, OUTPUT);
+  pinMode(A2, INPUT);
+  Serial.begin(9600);
+}
+
+void loop(){
+  dist = checkdistance_A1_A2();
+  Serial.print("厘米");
+  Serial.println(dist);
+  if (dist < 50) {
+    ledV3.setColor("#ff6600");
+    ledV3.off();
+
+  } else {
+    ledV3.setColor("#ff6600");
+    ledV3.on();
+
+  }
+
+}
